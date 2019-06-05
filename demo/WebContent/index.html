@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- 
+这个页面展示get/post/put/delete提交
+携带json字符串的body，大致如下
+POST test.json HTTP/1.1
+其他header
+空行
+{浏览器发送的json 字符串}
+
+controller 处理后，response 的体携带json字符串
+大致这样：
+HTTP/1.1 200 OK
+其他header
+空行
+{server回应的json字符串}
+
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery.js"></script>
+<script>
+$(document).ready(function(){
+	$("#bnGet").click(function(){
+		$.ajax({
+				type:"GET",
+	            url:"test.json",
+	            dataType:"json",
+	            success:function(data){
+	                $("#response").html(JSON.stringify(data));
+	            },
+	            error:function(jqXHR){
+	                console.log("Error: "+jqXHR.status);
+	            }
+		});
+	});
+	
+	$("#bnPost").click(function(){
+		$.ajax({
+			type:"POST",
+            url: "test.json",
+            contentType: "application/json",
+            dataType: "json", //表示返回值类型，不必须           
+            data: $("#request").val(), 
+	        success:function(data){
+	                $("#response").html(JSON.stringify(data));
+	            },
+	            error:function(jqXHR){
+	                console.log("Error: "+jqXHR.status);
+	            }
+		});
+	});
+	
+	$("#bnPut").click(function(){
+		$.ajax({
+			type:"PUT",
+            url: "test.json",
+            contentType: "application/json",
+            dataType: "json", //表示返回值类型，不必须           
+            data: $("#request").val(), 
+	        success:function(data){
+	                $("#response").html(JSON.stringify(data));
+	            },
+	            error:function(jqXHR){
+	                console.log("Error: "+jqXHR.status);
+	            }
+		});
+	});
+	
+	$("#bnDelete").click(function(){
+		$.ajax({
+			type:"DELETE",
+            url: "test.json",
+            contentType: "application/json",
+            dataType: "json", //表示返回值类型，不必须           
+            data: $("#request").val(), 
+	        success:function(data){
+	                $("#response").html(JSON.stringify(data));
+	            },
+	            error:function(jqXHR){
+	                console.log("Error: "+jqXHR.status);
+	            }
+		});
+	});
+});
+</script>
+</head>
+<body>
+<div>
+	<h5>request json:</h5>
+	<textarea id="request" rows="6" cols="60">
+{
+	"name":"guest",
+	"passwd":"secr3t",
+	"role":["Guest","User"],
+	"isLogin":false,
+	"state":"can not write notes"
+}
+	</textarea>
+	<h5>response json:</h5>
+	<textarea id="response" rows="6" cols="60">
+	</textarea>
+	<br>
+	<button id="bnGet">GET</button> 
+	<button id="bnPost">POST</button> 
+	<button id="bnPut">PUT</button> 
+	<button id="bnDelete">Delete</button> 
+	
+</div>
+</body>
+</html>
